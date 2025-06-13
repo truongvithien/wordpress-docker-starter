@@ -1,0 +1,209 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# WordPress Docker Starter — Cursor Project Rules
+
+## Purpose
+
+This is a modern **Docker-based WordPress stack** designed for:
+
+- Easy local development (Mac, Windows, Linux)
+- Identical deploy to VPS / production
+- Clean separation of code and data
+- Version control only what's needed (themes, plugins, config)
+
+## Architecture
+
+- `wordpress:` container → Apache + PHP + WordPress
+- `db:` container → MySQL 5.7
+- Local port → `http://localhost:8000`
+
+## Folder structure
+
+```
+wordpress-docker-starter/
+├── .gitignore
+├── docker-compose.yml
+├── .env.example
+├── config/
+│ ├── php/
+│ ├── nginx/
+│ └── mysql/
+├── scripts/
+│ ├── backup.sh
+│ ├── restore.sh
+│ └── setup.sh
+├── db_data/
+├── backups/
+├── logs/
+├── wordpress/
+│ └── wp-content/
+└── README.md
+```
+
+## Volumes
+
+- `./wordpress` is mounted to `/var/www/html` → any theme/plugin edits are live.
+- `./db_data` holds MySQL data → persistent across container restarts.
+
+## Local development workflow
+
+```bash
+# Start containers
+docker-compose up -d
+
+# Stop containers
+docker-compose down
+
+# View containers
+docker ps
+```
+
+	•	Initial site available at → http://localhost:8000
+	•	First run will auto-install WordPress into ./wordpress folder.
+
+What to commit
+
+✅ Commit:
+	•	docker-compose.yml
+	•	.gitignore
+	•	README.md
+	•	Custom themes → wordpress/wp-content/themes/my-theme/
+	•	Custom plugins → wordpress/wp-content/plugins/my-plugin/
+
+🚫 Do not commit:
+	•	db_data/
+	•	wordpress/wp-content/uploads/ (optional — unless needed)
+	•	wordpress/wp-config.php (if sensitive)
+
+Production deployment
+
+1️⃣ Use same docker-compose.yml on VPS.
+2️⃣ Map 80:80 on VPS.
+3️⃣ Point your domain to VPS IP.
+4️⃣ (Optional) Add HTTPS reverse proxy with nginx or Caddy.
+
+Future TODOs
+	•	Add Caddyfile or nginx config for automated HTTPS.
+	•	Add automatic database backup script.
+	•	Create GitHub Actions CI to build and deploy.
+
+⸻
+
+Notes
+	•	This project is intentionally simple and opinionated — no extra dependencies.
+	•	It is safe for beginners and advanced developers alike.
+
+## Environment Setup
+- Development environment variables
+- Production environment variables
+- Staging environment variables
+
+## Development Workflows
+1. Local Development
+   - Theme development
+   - Plugin development
+   - Database management
+   - Debugging tools
+
+2. Version Control
+   - Git workflow
+   - Branch strategy
+   - Commit guidelines
+   - Code review process
+
+3. Testing
+   - Unit testing
+   - Integration testing
+   - Performance testing
+   - Security testing
+
+## Deployment
+1. Local Development
+   ```bash
+   # Start development environment
+   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+   
+   # Run tests
+   ./scripts/test.sh
+   
+   # Build assets
+   ./scripts/build.sh
+   ```
+
+2. Staging Deployment
+   ```bash
+   # Deploy to staging
+   ./scripts/deploy.sh staging
+   
+   # Run staging tests
+   ./scripts/test.sh staging
+   ```
+
+3. Production Deployment
+   ```bash
+   # Deploy to production
+   ./scripts/deploy.sh production
+   
+   # Verify deployment
+   ./scripts/verify.sh
+   ```
+
+## Security
+1. SSL/TLS Configuration
+   - Let's Encrypt setup
+   - Custom SSL certificates
+   - SSL renewal automation
+
+2. Backup & Restore
+   - Automated backups
+   - Manual backups
+   - Restore procedures
+   - Backup verification
+
+3. User Management
+   - User roles
+   - Permission guidelines
+   - Security best practices
+
+## Performance
+1. Optimization
+   - Caching configuration
+   - Database optimization
+   - Asset optimization
+   - CDN integration
+
+2. Monitoring
+   - Log management
+   - Performance metrics
+   - Error tracking
+   - Uptime monitoring
+
+## Troubleshooting
+1. Common Issues
+   - Container issues
+   - Database issues
+   - WordPress issues
+   - Network issues
+
+2. Debug Tools
+   - Log analysis
+   - Performance profiling
+   - Security scanning
+   - Database inspection
+
+## Maintenance
+1. Regular Tasks
+   - Backup verification
+   - Security updates
+   - Performance monitoring
+   - Log rotation
+
+2. Emergency Procedures
+   - Incident response
+   - Data recovery
+   - Service restoration
+   - Communication plan
+

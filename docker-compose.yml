@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    platform: linux/arm64/v8
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./config/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - db
+    networks:
+      - wordpress_net
+
+  db:
+    image: mysql:8.0
+    platform: linux/arm64/v8
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: somewordpress
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - wordpress_net
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - wordpress_net
+
+networks:
+  wordpress_net:
+    driver: bridge 

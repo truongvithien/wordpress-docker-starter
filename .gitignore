@@ -1,0 +1,39 @@
+# WordPress core files
+wordpress/*
+!wordpress/wp-content/
+
+# WordPress content
+wordpress/wp-content/uploads/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/backup-db/
+wordpress/wp-content/cache/
+wordpress/wp-content/backups/
+
+# Configuration files
+wordpress/wp-config.php
+.env
+
+# Database
+db_data/
+
+# Logs
+logs/
+*.log
+
+# Backups
+backups/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo 
